@@ -18,6 +18,7 @@ import os
 import queue
 from typing import Optional
 from warnings import warn
+import datetime 
 
 import numpy as np
 import torch
@@ -404,6 +405,7 @@ class DistributedManager(object):
                     rank=manager.rank,
                     world_size=manager.world_size,
                     device_id=manager.device,
+                    timeout=datetime.timedelta(seconds=2*60*60)
                 )
             except TypeError:
                 # device_id only introduced in PyTorch 2.3
@@ -411,6 +413,7 @@ class DistributedManager(object):
                     backend,
                     rank=manager.rank,
                     world_size=manager.world_size,
+                    timeout=datetime.timedelta(seconds=2*60*60)
                 )
 
         if torch.cuda.is_available():
